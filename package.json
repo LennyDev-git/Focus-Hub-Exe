@@ -1,0 +1,36 @@
+{
+  "name": "focushub-pro",
+  "version": "1.0.0",
+  "description": "FocusHub Pro Desktop Application",
+  "main": "main.js",
+  "author": "Lenny",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder build --win"
+  },
+  "build": {
+    "appId": "com.lenny.focushub",
+    "productName": "FocusHub Pro",
+    "copyright": "Copyright © 2024",
+    "directories": {
+      "output": "dist"
+    },
+    "icon": "icon.ico",
+    "win": {
+      "target": [
+        "portable"
+      ],
+      "icon": "icon.ico"
+    },
+    "files": [
+      "**/*",
+      "!dist/*"
+    ]
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3"
+  }
+}
+
+

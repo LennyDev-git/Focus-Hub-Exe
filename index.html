@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusHub Pro | Advanced Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="light-mode"> 
+    
+    <div class="bg-gradient-overlay"></div>
+    <audio id="alarmSound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" preload="auto"></audio>
+
+    <div class="app-shell">
+        <header class="main-header">
+            <div class="brand">
+                <div class="logo-circle">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </div>
+                <h1>FocusHub <span class="text-accent">Pro</span></h1>
+            </div>
+
+            <div class="header-actions">
+                <div class="session-pill">
+                    <span class="pulse-dot"></span>
+                    Sessions: <span id="sessionsDone">0</span>
+                </div>
+                
+                <label class="switch">
+                    <input type="checkbox" id="themeToggle" class="input">
+                    <span class="slider">
+                        <span class="sun">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="#ffd43b"><circle r="5" cy="12" cx="12"></circle><path d="m21 13h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zm-17 0h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zm13.66-5.66a1 1 0 0 1 -.66-.29 1 1 0 0 1 0-1.41l.71-.71a1 1 0 1 1 1.41 1.41l-.71.71a1 1 0 0 1 -.75.29zm-12.02 12.02a1 1 0 0 1 -.71-.29 1 1 0 0 1 0-1.41l.71-.66a1 1 0 0 1 1.41 1.41l-.71.71a1 1 0 0 1 -.7.24zm6.36-14.36a1 1 0 0 1 -1-1v-1a1 1 0 0 1 2 0v1a1 1 0 0 1 -1 1zm0 17a1 1 0 0 1 -1-1v-1a1 1 0 0 1 2 0v1a1 1 0 0 1 -1 1zm-5.66-14.66a1 1 0 0 1 -.7-.29l-.71-.71a1 1 0 0 1 1.41-1.41l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1 -.7.29zm12.02 12.02a1 1 0 0 1 -.7-.29l-.66-.71a1 1 0 0 1 1.41-1.41l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1 -.76.29z"></path></g></svg>
+                        </span>
+                        <span class="moon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="m223.5 32c-123.5 0-223.5 100.3-223.5 224s100 224 223.5 224c60.6 0 115.5-24.2 155.8-63.4 5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6-96.9 0-175.5-78.8-175.5-176 0-65.8 36-123.1 89.3-153.3 6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path></svg>
+                        </span>
+                    </span>
+                </label>
+            </div>
+        </header>
+
+        <main class="dashboard-grid">
+            
+            <aside class="col-tasks">
+                <section class="panel tasks-panel">
+                    <div class="panel-header">
+                        <h3>Aufgaben</h3>
+                        <span id="taskCount" class="badge">0</span>
+                    </div>
+                    
+                    <div class="task-input-group">
+                        <input type="text" id="taskTitle" placeholder="Was steht an?">
+                        <div class="task-meta">
+                            <select id="taskPriority">
+                                <option value="Low">Low</option>
+                                <option value="Medium" selected>Normal</option>
+                                <option value="High">Wichtig</option>
+                            </select>
+                            <button id="addTask" class="btn-add">+</button>
+                        </div>
+                    </div>
+
+                    <ul id="tasks" class="task-list custom-scrollbar">
+                        </ul>
+                </section>
+            </aside>
+
+            <div class="col-center">
+                <section class="panel timer-panel">
+                    <div class="panel-header">
+                        <span class="eyebrow">Timer</span>
+                        <div id="timerStatus" class="status-indicator"></div>
+                    </div>
+                    
+                    <div class="timer-display-container">
+                        <div id="timerDisplay" class="giant-time">25:00</div>
+                        <div class="progress-ring-container">
+                            <div id="timerProgress" class="progress-bar"></div>
+                        </div>
+                    </div>
+
+                    <div class="timer-settings">
+                        <div class="input-field">
+                            <input type="number" id="timerMinutes" value="25" min="0">
+                        </div>
+                        <span class="time-sep">:</span>
+                        <div class="input-field">
+                            <input type="number" id="timerSeconds" value="00" min="0" max="59">
+                        </div>
+                    </div>
+
+                    <div class="timer-controls">
+                        <button id="startTimer" class="btn btn-primary">Start</button>
+                        <button id="pauseTimer" class="btn btn-secondary">Pause</button>
+                        <button id="resetTimer" class="btn btn-tertiary">Reset</button>
+                    </div>
+                    
+                    <button id="stopSound" class="btn btn-danger hidden">Alarm Stoppen</button>
+                </section>
+
+                <section id="statsPanel" class="panel stats-panel">
+                    <div class="panel-header">
+                        <h3>Statistik</h3>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <span class="label">Gesamt Fokus</span>
+                            <span class="value" id="totalWorkDisplay">0h 0m</span>
+                        </div>
+                        <div class="stat-card highlight">
+                            <span class="label">Heute</span>
+                            <span class="value" id="statsSessionCount">0</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="label">Pausen</span>
+                            <span class="value" id="totalBreakDisplay">0h 0m</span>
+                        </div>
+                    </div>
+                    <div id="motivationMsg" class="motivation-banner">
+                        Bereit für den ersten Fokus-Block?
+                    </div>
+                </section>
+            </div>
+
+            <aside class="col-tools">
+                <section class="panel tool-panel">
+                    <div class="panel-header"><h3>Stoppuhr</h3></div>
+                    <div id="stopwatchDisplay" class="mono-time">00:00.00</div>
+                    <div class="btn-group-pill">
+                        <button id="startStopwatch" class="btn-pill">Start</button>
+                        <button id="stopStopwatch" class="btn-pill">Stop</button>
+                        <button id="resetStopwatch" class="btn-icon">↺</button>
+                    </div>
+                    <ul id="swLaps" class="lap-list custom-scrollbar"></ul>
+                </section>
+
+                <section class="panel tool-panel">
+                    <div class="panel-header"><h3>Wecker</h3></div>
+                    <div class="alarm-ui">
+                        <div class="custom-time-input">
+                            <input type="time" id="alarmTime">
+                        </div>
+                        <button id="setAlarm" class="btn btn-accent">Set</button>
+                    </div>
+                    <div id="alarmStatus" class="alarm-msg">Kein Alarm aktiv</div>
+                </section>
+
+                <section class="panel history-panel">
+                    <div class="panel-header"><h3>Verlauf</h3></div>
+                    <ul id="sessionList" class="mini-log custom-scrollbar"></ul>
+                </section>
+            </aside>
+        </main>
+    </div>
+
+    <script src="renderer.js"></script>
+    
+    <script>
+        const toggle = document.getElementById('themeToggle');
+        toggle.addEventListener('change', () => {
+            if(toggle.checked) {
+                document.body.classList.add('dark-mode');
+                document.body.classList.remove('light-mode');
+            } else {
+                document.body.classList.add('light-mode');
+                document.body.classList.remove('dark-mode');
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
